@@ -24,7 +24,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 @RequestMapping("/design")
 @SessionAttributes("tacoOrder")
 public class DesignTacoController {
-    @SuppressWarnings("null")
     @ModelAttribute
     public void addIngredientsToModel(Model model) {
         List<Ingredient> ingredients = Arrays.asList(
