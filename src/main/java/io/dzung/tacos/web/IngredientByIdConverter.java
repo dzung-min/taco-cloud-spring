@@ -31,7 +31,7 @@ public class IngredientByIdConverter implements Converter<String, Ingredient> {
 
     @Override
     @Nullable
-    public Ingredient convert(@SuppressWarnings("null") String id) {
+    public Ingredient convert(String id) {
         return ingredientMap.get(id);
     }
 }

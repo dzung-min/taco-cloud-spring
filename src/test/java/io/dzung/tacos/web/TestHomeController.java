@@ -17,7 +17,6 @@ public class TestHomeController {
 	private MockMvc mockMvc;
 	
 	@Test
-	@SuppressWarnings("null")
 	public void homePage() throws Exception {
 		mockMvc.perform(get("/"))
 		.andExpect(status().isOk())
