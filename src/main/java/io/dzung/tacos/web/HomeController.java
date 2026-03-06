@@ -1,4 +1,4 @@
-package io.dzung.tacos;
+package io.dzung.tacos.web;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
