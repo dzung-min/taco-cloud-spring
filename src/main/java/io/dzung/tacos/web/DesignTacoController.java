@@ -1,4 +1,4 @@
-package io.dzung.tacos;
+package io.dzung.tacos.web;
 
 import java.util.Arrays;
 import java.util.List;
@@ -11,8 +11,13 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
+import io.dzung.tacos.Ingredient;
+import io.dzung.tacos.Taco;
+import io.dzung.tacos.TacoOrder;
 import io.dzung.tacos.Ingredient.Type;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.web.bind.annotation.PostMapping;
+
 
 @Slf4j
 @Controller
@@ -54,6 +59,14 @@ public class DesignTacoController {
     public String showDesignForm() {
         return "design";
     }
+
+    @PostMapping()
+    public String processTaco(Taco taco, @ModelAttribute TacoOrder tacoOrder) {
+        tacoOrder.addTaco(taco);
+        log.info("Processing taco: {}", taco);
+        return "redirect:/order/current";
+    }
+    
 
     private Iterable<Ingredient> filterByType(List<Ingredient> ingredients, Type type) {
         return ingredients.stream().filter(x -> x.getType().equals(type)).collect(Collectors.toList());
