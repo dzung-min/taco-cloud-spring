@@ -1,0 +1,44 @@
+package io.dzung.tacos.data;
+
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.List;
+import java.util.Optional;
+
+import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.stereotype.Repository;
+
+import io.dzung.tacos.Ingredient;
+import io.dzung.tacos.Ingredient.Type;
+
+@Repository
+public class JdbcIngredientRepository implements IngredientRepository {
+	private JdbcTemplate jdbcTemplate;
+
+	public JdbcIngredientRepository(JdbcTemplate jdbcTemplate) {
+		super();
+		this.jdbcTemplate = jdbcTemplate;
+	}
+
+	@Override
+	public Iterable<Ingredient> findAll() {
+		return jdbcTemplate.query("select * from Ingredient;", this::mapRowtoIngredient);
+	}
+
+	@Override
+	public Optional<Ingredient> findById(String id) {
+		List<Ingredient> ingredients = jdbcTemplate.query("select * form Ingredient where id=?",
+				this::mapRowtoIngredient, id);
+		return ingredients.size() == 0 ? Optional.empty() : Optional.of(ingredients.get(0));
+	}
+
+	@Override
+	public Ingredient save(Ingredient ingredient) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	private Ingredient mapRowtoIngredient(ResultSet row, int rowNum) throws SQLException {
+		return new Ingredient(row.getString("id"), row.getString("name"), Type.valueOf(row.getString("type")));
+	}
+}
